@@ -46,7 +46,7 @@ namespace Uno
         public void ShowGameScreen()
         {
             Console.Clear();
-            Console.WriteLine("Player 1 Cards");
+            Console.WriteLine("Player 1's turn");
         }
     }
 }
