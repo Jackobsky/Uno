@@ -8,5 +8,12 @@ namespace Uno
 {
     internal class Card
     {
+      string color;
+      string value;
+        public Card(string color, string value)
+        {
+            this.color = color;
+            this.value = value;
+        }
     }
 }

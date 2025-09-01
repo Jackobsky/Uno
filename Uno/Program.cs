@@ -9,8 +9,9 @@
             Console.ReadKey();
             Console.Clear();
 
-
-
+            Deck deck = new Deck();
+            deck.CreateDeck();
+            
         }
     }
 }
