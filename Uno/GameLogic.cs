@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Uno
 {
@@ -76,5 +77,30 @@ namespace Uno
                 Console.WriteLine($"{player.Value} | Cards left: {playerCards[player.Key]}{turnMarker}");
             }
         }
+
+        /*
+        private void DealCards(Deck deck, List<Player> players)
+        {
+            foreach (var player in players)
+            {
+                deck.GiveCards(player.Hand);
+            }
+        }
+
+        
+        private void ShowGameScreen(List<Player> players)
+        {
+            Console.Clear();
+            foreach (var player in players)
+            {
+                Console.WriteLine($"{player.Name} has the following cards:");
+                foreach (var card in player.Hand)
+                {
+                    Console.WriteLine($"{card.Color} {card.Value}");
+                }
+                Console.WriteLine();
+            }
+        }
+        */
     }
 }
