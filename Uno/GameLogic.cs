@@ -1,14 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Uno
 {
-    public class UI
+    public class GameLogic
     {
+        public GameLogic() { }
+
+        public int currentPlayerIndex = 0;
+        public void StartGame()
+        {
+            Deck deck = new Deck();
+            deck.CreateDeck();
+            GameLogic GL = new GameLogic();
+            GL.ShowMainMenu();
+        }
+
         public void ShowMainMenu()
         {
             Console.Clear();
@@ -19,16 +29,15 @@ namespace Uno
             if (choice == 1)
             {
                 Console.Clear();
-                ChoosePlayerNames();
-                ShowGameScreen();
+                ShowGameScreen(ChoosePlayerNames(), currentPlayerIndex);
             }
-            else 
+            else
             {
                 Console.Clear();
             }
         }
 
-        public void ChoosePlayerNames()
+        public Dictionary<int, string> ChoosePlayerNames()
         {
             //Console.WriteLine("Enter number of players (2):");
             int numPlayers = 2; //int.Parse(Console.ReadLine());
@@ -37,16 +46,30 @@ namespace Uno
             {
                 Console.WriteLine($"Enter name for Player {i}:");
                 string name = Console.ReadLine();
+                if (name == null)
+                {
+                   name = "Player" + i;
+                }
                 playerNames.Add(i, name);
-                Console.Clear();
+                Console.Clear();                
             }
-
+            return playerNames;
         }
 
-        public void ShowGameScreen()
+        public void ShowGameScreen(Dictionary<int, string> playerNames, int currentPlayer)
         {
             Console.Clear();
-            Console.WriteLine("Player 1's turn");
+
+            if (playerNames.ContainsKey(currentPlayer + 1)) 
+            {
+                string playerName = playerNames[currentPlayer + 1];
+                Console.WriteLine($"{playerName}'s turn");
+            }
+            else
+            {
+                Console.WriteLine("Error: Invalid player index");
+            }
         }
+
     }
 }
