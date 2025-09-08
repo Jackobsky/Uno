@@ -21,7 +21,7 @@ namespace Uno
             {
                 Console.Clear();
                 ChoosePlayerNames();
-                ShowGameScreen();
+                //ShowGameScreen();
             }
             else 
             {

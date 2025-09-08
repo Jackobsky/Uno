@@ -55,11 +55,11 @@ namespace Uno
             cards = cards.OrderBy(x => rand.Next()).ToList();
         }
 
-        public void giveCards(List<Card> hand )
+        public void GiveCards(List<Card> hand )
         {
             for(int i = 0; i < 7; i++)
             {
-                hand.Add(deck[0]);
+                hand.Add(cards[0]);
                 cards.RemoveAt(0);
             }
         }
