@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Uno
+﻿namespace Uno
 {
     internal class Deck
     {
@@ -14,7 +8,8 @@ namespace Uno
 
         public void CreateDeck()
         {
-            for(int k = 0; k < 2; k++)
+            //Skapa nummerkort och actionkort
+            for (int k = 0; k < 2; k++)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -43,7 +38,14 @@ namespace Uno
                     cards.Add(new Card(color, "Draw Two"));
                 }
             }
-            
+
+            //Skapa wild cards
+            for (int i = 0; i < 4; i++)
+            {
+                cards.Add(new Card("Black", "Wild"));
+                cards.Add(new Card("Black", "Wild Draw Four"));
+            }
+
         }
     }
 }
