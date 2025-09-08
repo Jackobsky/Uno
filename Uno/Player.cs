@@ -8,5 +8,12 @@ namespace Uno
 {
     internal class Player
     {
+        public List<Card> Hand = new List<Card>();
+        public string Name;
+
+        public Player(string name)
+        {
+            Name = name;
+        }
     }
 }
