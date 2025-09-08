@@ -47,5 +47,20 @@
             }
 
         }
+
+        public void ShuffleDeck()
+        {
+            Random rand = new Random();
+            cards = cards.OrderBy(x => rand.Next()).ToList();
+        }
+
+        public void GiveCards(List<Card> hand)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                hand.Add(cards[0]);
+                cards.RemoveAt(0);
+            }
+        }
     }
 }
