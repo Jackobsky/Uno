@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Uno
 {
@@ -11,10 +8,12 @@ namespace Uno
         public GameLogic() { }
 
         public int currentPlayerIndex = 0;
+
+        // Visuellt placeholder för spelarnas kortantal
+        private Dictionary<int, int> playerCards = new Dictionary<int, int>();
+
         public void StartGame()
         {
-            Deck deck = new Deck();
-            deck.CreateDeck();
             GameLogic GL = new GameLogic();
             GL.ShowMainMenu();
         }
@@ -25,11 +24,20 @@ namespace Uno
             Console.WriteLine("Welcome to Uno! \nWhat do you want to do?");
             Console.WriteLine("1. Start Game");
             Console.WriteLine("2. Exit");
+
             int choice = int.Parse(Console.ReadLine());
             if (choice == 1)
             {
                 Console.Clear();
-                ShowGameScreen(ChoosePlayerNames(), currentPlayerIndex);
+                var playerNames = ChoosePlayerNames();
+
+                // Tilldela alla spelare 7 kort (placeholder)
+                foreach (var player in playerNames)
+                {
+                    playerCards[player.Key] = 7;
+                }
+
+                ShowGameScreen(playerNames, currentPlayerIndex);
             }
             else
             {
@@ -39,19 +47,18 @@ namespace Uno
 
         public Dictionary<int, string> ChoosePlayerNames()
         {
-            //Console.WriteLine("Enter number of players (2):");
-            int numPlayers = 2; //int.Parse(Console.ReadLine());
+            int numPlayers = 2;
             Dictionary<int, string> playerNames = new Dictionary<int, string>();
             for (int i = 1; i <= numPlayers; i++)
             {
                 Console.WriteLine($"Enter name for Player {i}:");
                 string name = Console.ReadLine();
-                if (name == null)
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                   name = "Player" + i;
+                    name = "Player" + i;
                 }
                 playerNames.Add(i, name);
-                Console.Clear();                
+                Console.Clear();
             }
             return playerNames;
         }
@@ -60,16 +67,14 @@ namespace Uno
         {
             Console.Clear();
 
-            if (playerNames.ContainsKey(currentPlayer + 1)) 
+            Console.WriteLine("Current game state:");
+            Console.WriteLine("-------------------");
+
+            foreach (var player in playerNames)
             {
-                string playerName = playerNames[currentPlayer + 1];
-                Console.WriteLine($"{playerName}'s turn");
-            }
-            else
-            {
-                Console.WriteLine("Error: Invalid player index");
+                string turnMarker = (player.Key - 1 == currentPlayer) ? " <--- Current turn" : "";
+                Console.WriteLine($"{player.Value} | Cards left: {playerCards[player.Key]}{turnMarker}");
             }
         }
-
     }
 }
