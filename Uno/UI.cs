@@ -9,6 +9,7 @@ namespace Uno
 {
     public class UI
     {
+        public int numPlayers;
         public void ShowMainMenu()
         {
             Console.Clear();
@@ -30,8 +31,8 @@ namespace Uno
 
         public void ChoosePlayerNames()
         {
-            //Console.WriteLine("Enter number of players (2):");
-            int numPlayers = 2; //int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter number of players (2):");
+            numPlayers = int.Parse(Console.ReadLine());  
             Dictionary<int, string> playerNames = new Dictionary<int, string>();
             for (int i = 1; i <= numPlayers; i++)
             {
@@ -41,12 +42,35 @@ namespace Uno
                 Console.Clear();
             }
 
+            for(int i = 0; i < playerNames.Count; i++)
+            {
+
+            }
+
         }
 
-        public void ShowGameScreen()
+        private void DealCards(Deck deck, List<Player> players)
+        {
+            foreach (var player in players)
+            {
+                deck.GiveCards(player.Hand);
+            }
+        }
+
+        private void ShowGameScreen(List<Player> players)
         {
             Console.Clear();
-            Console.WriteLine("Player 1 Cards");
+            foreach (var player in players)
+            {
+                Console.WriteLine($"{player.Name} has the following cards:");
+                foreach (var card in player.Hand)
+                {
+                    Console.WriteLine($"{card.Color} {card.Value}");
+                }
+                Console.WriteLine();
+            }
         }
+
+
     }
 }

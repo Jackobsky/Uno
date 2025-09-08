@@ -2,12 +2,12 @@
 {
     internal class Card
     {
-        public string color;
-        public string value;
+        public string Color;
+        public string Value;
         public Card(string color, string value)
         {
-            this.color = color;
-            this.value = value;
+            Color = color;
+            Value = value;
         }
     }
 }

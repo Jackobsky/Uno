@@ -1,4 +1,6 @@
-﻿namespace Uno
+﻿using System.Runtime.Serialization.Formatters;
+
+namespace Uno
 {
     internal class Deck
     {
@@ -45,7 +47,21 @@
                 cards.Add(new Card("Black", "Wild"));
                 cards.Add(new Card("Black", "Wild Draw Four"));
             }
+        }
 
+        public void ShuffleDeck()
+        {
+            Random rand = new Random();
+            cards = cards.OrderBy(x => rand.Next()).ToList();
+        }
+
+        public void giveCards(List<Card> hand )
+        {
+            for(int i = 0; i < 7; i++)
+            {
+                hand.Add(deck[0]);
+                cards.RemoveAt(0);
+            }
         }
     }
 }
