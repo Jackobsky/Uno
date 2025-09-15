@@ -1,6 +1,6 @@
 ﻿namespace Uno
 {
-    public class Deck
+    internal class Deck
     {
         public Deck() { }
 

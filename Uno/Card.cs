@@ -1,6 +1,6 @@
 ﻿namespace Uno
 {
-    public class Card
+    internal class Card
     {
         public string color;
         public string value;
