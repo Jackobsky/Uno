@@ -54,15 +54,6 @@
             cards = cards.OrderBy(x => rand.Next()).ToList();
         }
 
-        public void GiveCards(List<Card> hand)
-        {
-            for (int i = 0; i < 7; i++)
-            {
-                hand.Add(cards[0]);
-                cards.RemoveAt(0);
-            }
-        }
-
         public Card DrawCard()
         {
             Card card = cards[0];
