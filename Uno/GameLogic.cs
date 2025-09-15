@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 
 namespace Uno
 {
     public class GameLogic
     {
-        public GameLogic() { }
-
         public int currentPlayerIndex = 0;
+        private List<Player> players = new List<Player>();
+        private Deck deck;
 
-        // Visuellt placeholder för spelarnas kortantal
-        private Dictionary<int, int> playerCards = new Dictionary<int, int>();
+        public GameLogic(Deck deck)
+        {
+            this.deck = deck;
+        }
 
         public void StartGame()
         {
-            GameLogic GL = new GameLogic();
-            GL.ShowMainMenu();
+            ShowMainMenu();
         }
 
         public void ShowMainMenu()
@@ -30,15 +30,15 @@ namespace Uno
             if (choice == 1)
             {
                 Console.Clear();
-                var playerNames = ChoosePlayerNames();
+                players = ChoosePlayerNames();
 
-                // Tilldela alla spelare 7 kort (placeholder)
-                foreach (var player in playerNames)
+                // Ge kort till alla spelare
+                foreach (var player in players)
                 {
-                    playerCards[player.Key] = 7;
+                    deck.GiveCards(player.Hand);
                 }
 
-                ShowGameScreen(playerNames, currentPlayerIndex);
+                ShowGameScreen();
             }
             else
             {
@@ -46,10 +46,11 @@ namespace Uno
             }
         }
 
-        public Dictionary<int, string> ChoosePlayerNames()
+        static List<Player> ChoosePlayerNames()
         {
-            int numPlayers = 2;
-            Dictionary<int, string> playerNames = new Dictionary<int, string>();
+            int numPlayers = 2; // TODO: Let the user choose later
+            List<Player> players = new List<Player>();
+
             for (int i = 1; i <= numPlayers; i++)
             {
                 Console.WriteLine($"Enter name for Player {i}:");
@@ -58,49 +59,26 @@ namespace Uno
                 {
                     name = "Player" + i;
                 }
-                playerNames.Add(i, name);
+
+                players.Add(new Player(name));
                 Console.Clear();
             }
-            return playerNames;
+
+            return players;
         }
 
-        public void ShowGameScreen(Dictionary<int, string> playerNames, int currentPlayer)
+        public void ShowGameScreen()
         {
             Console.Clear();
-
             Console.WriteLine("Current game state:");
             Console.WriteLine("-------------------");
 
-            foreach (var player in playerNames)
+            for (int i = 0; i < players.Count; i++)
             {
-                string turnMarker = (player.Key - 1 == currentPlayer) ? " <--- Current turn" : "";
-                Console.WriteLine($"{player.Value} | Cards left: {playerCards[player.Key]}{turnMarker}");
+                var player = players[i];
+                string turnMarker = (i == currentPlayerIndex) ? " <--- Current turn" : "";
+                Console.WriteLine($"{player.Name} | Cards left: {player.Hand.Count}{turnMarker}");
             }
         }
-
-        /*
-        private void DealCards(Deck deck, List<Player> players)
-        {
-            foreach (var player in players)
-            {
-                deck.GiveCards(player.Hand);
-            }
-        }
-
-        
-        private void ShowGameScreen(List<Player> players)
-        {
-            Console.Clear();
-            foreach (var player in players)
-            {
-                Console.WriteLine($"{player.Name} has the following cards:");
-                foreach (var card in player.Hand)
-                {
-                    Console.WriteLine($"{card.Color} {card.Value}");
-                }
-                Console.WriteLine();
-            }
-        }
-        */
     }
 }

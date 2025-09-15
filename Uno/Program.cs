@@ -6,9 +6,10 @@
         {
             Deck deck = new Deck();
             deck.CreateDeck();
-            GameLogic ui = new GameLogic();
-            ui.ShowMainMenu();
+            deck.ShuffleDeck();
+
+            GameLogic ui = new GameLogic(deck);
+            ui.StartGame();
         }
     }
 }
- 
