@@ -73,25 +73,15 @@ namespace Uno
         {
             while (true)
             {
-                Console.Clear();
-                ShowGameScreen();
+                ShowGameScreen(); // Already clears console
+
                 var currentPlayer = players[currentPlayerIndex];
-
-                Console.WriteLine("\nYour hand:");
-                for (int i = 0; i < currentPlayer.Hand.Count; i++)
-                {
-                    Console.Write($"{i + 1}. ");
-                    currentPlayer.Hand[i].PrintColored();
-                    Console.WriteLine();
-
-                }
-
                 Console.WriteLine("\nChoose a card to play (number) or 0 to draw:");
                 int choice = int.Parse(Console.ReadLine() ?? "0");
 
                 if (choice == 0)
                 {
-                    // Dra kort
+                    // Draw a card
                     currentPlayer.Hand.Add(deck.DrawCard());
                     Console.WriteLine("You drew a card. Press any key to continue.");
                     Console.ReadKey();
@@ -122,6 +112,7 @@ namespace Uno
             }
         }
 
+
         private bool CanPlayCard(Card card)
         {
             Card topCard = discardPile.Last();
@@ -135,20 +126,37 @@ namespace Uno
 
         public void ShowGameScreen()
         {
+            Console.Clear();
             Console.WriteLine("Current game state:");
-            Console.WriteLine("-------------------");
+            Console.WriteLine("-------------------\n");
 
+            // 1. Show last played card at the top
+            Console.WriteLine("Last played card:");
+            Card.PrintCardsInRows(new List<Card> { discardPile.Last() });
+            Console.WriteLine();
+
+            // 2. Show all players' cards
             for (int i = 0; i < players.Count; i++)
             {
                 var player = players[i];
                 string turnMarker = (i == currentPlayerIndex) ? " <--- Current turn" : "";
                 Console.WriteLine($"{player.Name} | Cards left: {player.Hand.Count}{turnMarker}");
+
+                if (i == currentPlayerIndex)
+                {
+                    // Current player's cards visible in game state
+                    Card.PrintCardsInRows(player.Hand, maxCardsPerRow: 10, hidden: false, showIndices: true);
+                }
+                else
+                {
+                    // Other players' cards hidden
+                    Card.PrintCardsInRows(player.Hand, maxCardsPerRow: 10, hidden: true);
+                }
+
+                Console.WriteLine(); // spacing between players
             }
-
-            Console.Write("\nLast played card: ");
-            discardPile.Last().PrintColored();
-            Console.WriteLine();
-
         }
+
+
     }
 }
