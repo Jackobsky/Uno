@@ -37,7 +37,10 @@ namespace Uno
                 // Ge kort till alla spelare
                 foreach (var player in players)
                 {
-                    deck.GiveCards(player.Hand);
+                    for(int i = 0; i < 7; i++)
+                    {
+                        player.Hand.Add(deck.DrawCard());
+                    }
                 }
 
                 // Lägg ut första kortet på bordet
