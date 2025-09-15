@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Uno
 {
-    public class GameLogic
+    internal class GameLogic
     {
         public int currentPlayerIndex = 0;
         private List<Player> players = new List<Player>();
