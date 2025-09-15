@@ -62,5 +62,13 @@
                 cards.RemoveAt(0);
             }
         }
+
+        public Card DrawCard()
+        {
+            Card card = cards[0];
+            cards.RemoveAt(0);
+            return card;
+        }
+
     }
 }
