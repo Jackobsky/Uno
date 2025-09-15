@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Uno
 {
-    internal class Player
+    public class Player
     {
         public List<Card> Hand = new List<Card>();
-        public string Name;
+        public string Name { get; set; }
 
         public Player(string name)
         {
