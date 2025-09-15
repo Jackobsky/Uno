@@ -78,7 +78,7 @@ namespace Uno
             }
         }
 
-        /*
+        
         private void DealCards(Deck deck, List<Player> players)
         {
             foreach (var player in players)
@@ -88,19 +88,5 @@ namespace Uno
         }
 
         
-        private void ShowGameScreen(List<Player> players)
-        {
-            Console.Clear();
-            foreach (var player in players)
-            {
-                Console.WriteLine($"{player.Name} has the following cards:");
-                foreach (var card in player.Hand)
-                {
-                    Console.WriteLine($"{card.Color} {card.Value}");
-                }
-                Console.WriteLine();
-            }
-        }
-        */
     }
 }

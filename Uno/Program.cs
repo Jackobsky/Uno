@@ -6,6 +6,7 @@
         {
             Deck deck = new Deck();
             deck.CreateDeck();
+            deck.ShuffleDeck();
             GameLogic ui = new GameLogic();
             ui.ShowMainMenu();
         }
