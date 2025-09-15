@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Uno
+﻿namespace Uno
 {
     internal class GameLogic
     {
@@ -37,7 +33,7 @@ namespace Uno
                 // Ge kort till alla spelare
                 foreach (var player in players)
                 {
-                    for(int i = 0; i < 7; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         player.Hand.Add(deck.DrawCard());
                     }
@@ -86,8 +82,25 @@ namespace Uno
 
                 }
 
-                Console.WriteLine("\nChoose a card to play (number) or 0 to draw:");
-                int choice = int.Parse(Console.ReadLine() ?? "0");
+                int choice;
+                while (true)
+                {
+                    Console.WriteLine("\nChoose a card to play (number) or 0 to draw:");
+                    if (!int.TryParse(Console.ReadLine(), out choice))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                        continue; // fråga igen
+                    }
+
+
+                    if (choice < 0 || choice > currentPlayer.Hand.Count)
+                    {
+                        Console.WriteLine("Choice out of range. Try again.");
+                        continue; // fråga igen
+                    }
+
+                    break; // giltigt val, lämna while
+                }
 
                 if (choice == 0)
                 {
@@ -101,6 +114,65 @@ namespace Uno
                     Card selectedCard = currentPlayer.Hand[choice - 1];
                     if (CanPlayCard(selectedCard))
                     {
+                        if (selectedCard.value == "Wild" || selectedCard.value == "Wild Draw Four") // Välj färg vid wild card
+                        {
+                            Console.Clear();
+                            ShowGameScreen();
+                            Console.WriteLine("Choose a color: 1. Red 2. Blue 3. Green 4. Yellow");
+                            int colorChoice = int.Parse(Console.ReadLine() ?? "1");
+                            switch (colorChoice)
+                            {
+                                case 1:
+                                    selectedCard.color = "Red";
+                                    break;
+                                case 2:
+                                    selectedCard.color = "Blue";
+                                    break;
+                                case 3:
+                                    selectedCard.color = "Green";
+                                    break;
+                                case 4:
+                                    selectedCard.color = "Yellow";
+                                    break;
+                                default:
+                                    selectedCard.color = "Red";
+                                    break;
+                            }
+
+                            if(selectedCard.value == "Wild Draw Four") //Logik för att dra 4 kort
+                            {
+                                NextPlayer(); //skip player turn
+                                var nextPlayer = players[currentPlayerIndex];
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    nextPlayer.Hand.Add(deck.DrawCard());
+                                }
+                                Console.WriteLine($"{nextPlayer.Name} draws 4 cards!");
+                            }
+                        }
+                        else if (selectedCard.value == "Draw Two") // Dra 2 kort
+                        {
+                            NextPlayer();
+                            var nextPlayer = players[currentPlayerIndex];
+                            for (int i = 0; i < 2; i++)
+                            {
+                                nextPlayer.Hand.Add(deck.DrawCard());
+                            }
+                            Console.WriteLine($"{nextPlayer.Name} draws 2 cards!");
+                        }
+                        else if (selectedCard.value == "Skip") // Hoppa över nästa spelare
+                        {
+                            NextPlayer();
+                            Console.WriteLine($"{players[currentPlayerIndex].Name} is skipped!");
+                        }
+                        else if (selectedCard.value == "Reverse") // Vänd spelordningen
+                        {
+                            players.Reverse();
+                            currentPlayerIndex = players.Count - 1 - currentPlayerIndex; // Justera index för nuvarande spelare
+                            Console.WriteLine("Play order reversed!");
+                        }
+
+                        // Lägg kortet på högen, samma för alla kort
                         discardPile.Add(selectedCard);
                         currentPlayer.Hand.RemoveAt(choice - 1);
                         Console.WriteLine($"You played {selectedCard}. Press any key to continue.");
@@ -111,6 +183,8 @@ namespace Uno
                     {
                         Console.WriteLine("You cannot play that card. Press any key to try again.");
                         Console.ReadKey();
+                        Console.Clear();
+                        ShowGameScreen();
                     }
                 }
 
