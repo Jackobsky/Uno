@@ -77,7 +77,10 @@ namespace Uno
                 Console.WriteLine("\nYour hand:");
                 for (int i = 0; i < currentPlayer.Hand.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {currentPlayer.Hand[i]}");
+                    Console.Write($"{i + 1}. ");
+                    currentPlayer.Hand[i].PrintColored();
+                    Console.WriteLine();
+
                 }
 
                 Console.WriteLine("\nChoose a card to play (number) or 0 to draw:");
@@ -139,7 +142,10 @@ namespace Uno
                 Console.WriteLine($"{player.Name} | Cards left: {player.Hand.Count}{turnMarker}");
             }
 
-            Console.WriteLine($"\nLast played card: {discardPile.Last()}");
+            Console.Write("\nLast played card: ");
+            discardPile.Last().PrintColored();
+            Console.WriteLine();
+
         }
     }
 }
