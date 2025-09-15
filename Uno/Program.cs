@@ -10,6 +10,7 @@
 
             GameLogic ui = new GameLogic(deck);
             ui.StartGame();
+
         }
     }
 }
