@@ -46,9 +46,14 @@
                     var lastColor = discardPile.Last().color;
                     var lastValue = discardPile.Last().value;
                     if(lastColor != "Black" || lastValue != "Draw Two" || lastValue != "Skip" || lastValue != "Reverse") // Första kortet kan inte vara wild, +2, skip eller reverse
+                    { 
                         break;
-                    else
+                    } 
+                    else 
+                    {
                         discardPile.Clear(); // Ta bort wild kortet och dra ett nytt
+                    }
+                       
                 }
                 PlayTurns();
             }
