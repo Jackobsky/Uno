@@ -40,8 +40,16 @@
                 }
 
                 // Lägg ut första kortet på bordet
-                discardPile.Add(deck.DrawCard());
-
+                while (true)
+                {
+                    discardPile.Add(deck.DrawCard());
+                    var lastColor = discardPile.Last().color;
+                    var lastValue = discardPile.Last().value;
+                    if(lastColor != "Black" || lastValue != "Draw Two" || lastValue != "Skip" || lastValue != "Reverse") // Första kortet kan inte vara wild, +2, skip eller reverse
+                        break;
+                    else
+                        discardPile.Clear(); // Ta bort wild kortet och dra ett nytt
+                }
                 PlayTurns();
             }
         }
@@ -116,7 +124,7 @@
                     {
                         if (selectedCard.value == "Wild" || selectedCard.value == "Wild Draw Four") // Välj färg vid wild card
                         {
-                            Console.Clear();
+                            //Console.Clear();
                             ShowGameScreen();
                             Console.WriteLine("Choose a color: 1. Red 2. Blue 3. Green 4. Yellow");
                             int colorChoice = int.Parse(Console.ReadLine() ?? "1");
