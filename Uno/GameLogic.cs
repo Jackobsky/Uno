@@ -144,22 +144,43 @@
                     {
                         if (selectedCard.value == "Wild" || selectedCard.value == "Wild Draw Four") // Välj färg vid wild card
                         {
-                            //Console.Clear();
                             ShowGameScreen();
-                            Console.WriteLine("Choose a color: 1. Red 2. Blue 3. Green 4. Yellow");
-                            int colorChoice = int.Parse(Console.ReadLine() ?? "1");
-                            switch (colorChoice)
+                            Console.WriteLine("You played a Wild card!");
+                            Console.Write("Choose a color: ");
+
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("1. Red  ");
+
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("2. Blue  ");
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write("3. Green  ");
+
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("4. Yellow");
+
+                            Console.ResetColor();
+                            Console.WriteLine(); // New line for input
+
+                            string input = Console.ReadLine()?.Trim().ToLower() ?? "1";
+
+                            switch (input)
                             {
-                                case 1:
+                                case "1":
+                                case "red":
                                     selectedCard.color = "Red";
                                     break;
-                                case 2:
+                                case "2":
+                                case "blue":
                                     selectedCard.color = "Blue";
                                     break;
-                                case 3:
+                                case "3":
+                                case "green":
                                     selectedCard.color = "Green";
                                     break;
-                                case 4:
+                                case "4":
+                                case "yellow":
                                     selectedCard.color = "Yellow";
                                     break;
                                 default:
@@ -169,7 +190,7 @@
 
                             if (selectedCard.value == "Wild Draw Four") //Logik för att dra 4 kort
                             {
-                                NextPlayer(); //skip player turn
+                                NextPlayer(); // skip player turn
                                 var nextPlayer = players[currentPlayerIndex];
                                 for (int i = 0; i < 4; i++)
                                 {
@@ -178,6 +199,7 @@
                                 Console.WriteLine($"{nextPlayer.Name} draws 4 cards!");
                             }
                         }
+
                         else if (selectedCard.value == "Draw Two") // Dra 2 kort
                         {
                             NextPlayer();
