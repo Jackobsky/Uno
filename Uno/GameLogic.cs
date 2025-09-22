@@ -45,7 +45,7 @@
                     discardPile.Add(deck.DrawCard());
                     var lastColor = discardPile.Last().color;
                     var lastValue = discardPile.Last().value;
-                    if(lastColor != "Black" || lastValue != "Draw Two" || lastValue != "Skip" || lastValue != "Reverse") // Första kortet kan inte vara wild, +2, skip eller reverse
+                    if(lastColor != "Black" && lastValue != "Draw Two" && lastValue != "Skip" && lastValue != "Reverse") // Första kortet kan inte vara wild, +2, skip eller reverse
                     { 
                         break;
                     } 
@@ -82,27 +82,30 @@
         {
             while (true)
             {
-                ShowGameScreen(); // Already clears console
-
-
+                ShowGameScreen(); 
                 var currentPlayer = players[currentPlayerIndex];
-                Console.WriteLine("\nChoose a card to play (number) or 0 to draw:");
-                int choice = int.Parse(Console.ReadLine() ?? "0");
-
                 int choice;
+
+                // Fråga spelaren vad den vill göra
                 while (true)
                 {
-                    Console.WriteLine("\nChoose a card to play (number) or 0 to draw:");
+                    Console.WriteLine("\nChoose a card to play (number) or 0 to draw a new card:");
+
+                    //Om inmatningen inte är en siffra, fråga igen
                     if (!int.TryParse(Console.ReadLine(), out choice))
                     {
                         Console.WriteLine("Invalid input. Please enter a number.");
+                        Console.ReadKey();
+                        ShowGameScreen();
                         continue; // fråga igen
                     }
 
-
+                    // Om valet är utanför intervallet, fråga igen
                     if (choice < 0 || choice > currentPlayer.Hand.Count)
                     {
                         Console.WriteLine("Choice out of range. Try again.");
+                        Console.ReadKey();
+                        ShowGameScreen();
                         continue; // fråga igen
                     }
 
