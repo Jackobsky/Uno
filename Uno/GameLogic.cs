@@ -237,6 +237,13 @@
                     }
                 }
 
+                //uno
+                if(currentPlayer.Hand.Count == 1)
+                {
+                    Console.WriteLine("UNO! You have one card left!");
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
+                }
 
                 //winner winner chicken dinner
                 if (currentPlayer.Hand.Count == 0)
