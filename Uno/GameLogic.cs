@@ -217,9 +217,18 @@
                         }
                         else if (selectedCard.value == "Reverse") // Vänd spelordningen
                         {
-                            players.Reverse();
-                            currentPlayerIndex = players.Count - 1 - currentPlayerIndex; // Justera index för nuvarande spelare
-                            Console.WriteLine("Play order reversed!");
+                            if(players.Count == 2) // Om det bara är 2 spelare, fungerar reverse som skip
+                            {
+                                NextPlayer();
+                                Console.WriteLine($"{players[currentPlayerIndex].Name} is skipped!");
+                                Console.WriteLine("Play order reversed!");
+                            }
+                            else
+                            {
+                                players.Reverse();
+                                currentPlayerIndex = players.Count - 1 - currentPlayerIndex; // Justera index för nuvarande spelare
+                                Console.WriteLine("Play order reversed!");
+                            }
                         }
 
                         // Lägg kortet på högen, samma för alla kort
@@ -240,7 +249,17 @@
                 //uno
                 if(currentPlayer.Hand.Count == 1)
                 {
-                    Console.WriteLine("UNO! You have one card left!");
+                    Console.WriteLine("1 card left! Write UNO to avoid penalty..");
+                    if(Console.ReadLine().ToLower() == "uno")
+                    {
+                        Console.WriteLine("Phew! You avoided the penalty.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("You failed to say UNO! Drawing 2 penalty cards.");
+                        currentPlayer.Hand.Add(deck.DrawCard());
+                        currentPlayer.Hand.Add(deck.DrawCard());
+                    }
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey();
                 }
