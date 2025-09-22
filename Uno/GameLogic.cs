@@ -45,15 +45,15 @@
                     discardPile.Add(deck.DrawCard());
                     var lastColor = discardPile.Last().color;
                     var lastValue = discardPile.Last().value;
-                    if(lastColor != "Black" && lastValue != "Draw Two" && lastValue != "Skip" && lastValue != "Reverse") // Första kortet kan inte vara wild, +2, skip eller reverse
-                    { 
+                    if (lastColor != "Black" && lastValue != "Draw Two" && lastValue != "Skip" && lastValue != "Reverse") // Första kortet kan inte vara wild, +2, skip eller reverse
+                    {
                         break;
-                    } 
-                    else 
+                    }
+                    else
                     {
                         discardPile.Clear(); // Ta bort wild kortet och dra ett nytt
                     }
-                       
+
                 }
                 PlayTurns();
             }
@@ -61,9 +61,26 @@
 
         static List<Player> ChoosePlayerNames()
         {
-            int numPlayers = 2; // kan ändras senare
-            List<Player> players = new List<Player>();
+            int numPlayers; // kan ändras senare
+            while (true)
+            {
+                Console.Write("How many players (2-4)?: ");
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out numPlayers) || numPlayers < 2 || numPlayers > 4)
+                {
+                    Console.WriteLine("Invalid number of players. Please enter a number between 2 and 4.");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    numPlayers = int.Parse(input);
+                    break;
+                }
+                Console.Clear();
+            }
 
+            Console.Clear();
+            List<Player> players = new List<Player>();
             for (int i = 1; i <= numPlayers; i++)
             {
                 Console.WriteLine($"Enter name for Player {i}:");
@@ -82,7 +99,7 @@
         {
             while (true)
             {
-                ShowGameScreen(); 
+                ShowGameScreen();
                 var currentPlayer = players[currentPlayerIndex];
                 int choice;
 
@@ -111,7 +128,7 @@
 
                     break; // giltigt val, lämna while
                 }
-   
+
 
                 if (choice == 0)
                 {
@@ -171,7 +188,7 @@
                                     break;
                             }
 
-                            if (selectedCard.value == "Wild Draw Four") // Logik för att dra 4 kort
+                            if (selectedCard.value == "Wild Draw Four") //Logik för att dra 4 kort
                             {
                                 NextPlayer(); // skip player turn
                                 var nextPlayer = players[currentPlayerIndex];
@@ -216,14 +233,17 @@
                     {
                         Console.WriteLine("You cannot play that card. Press any key to try again.");
                         Console.ReadKey();
-                        Console.Clear();
                         ShowGameScreen();
                     }
                 }
 
+
+                //winner winner chicken dinner
                 if (currentPlayer.Hand.Count == 0)
                 {
-                    Console.WriteLine($"{currentPlayer.Name} wins!");
+                    Console.WriteLine($"{currentPlayer.Name} wins! :D");
+                    Console.WriteLine("Press any key to exit.");
+                    Console.ReadKey();
                     break;
                 }
             }
